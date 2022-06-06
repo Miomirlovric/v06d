@@ -32,7 +32,7 @@ void main_window::on_paint(HDC hdc) {
 	HBRUSH h = CreateSolidBrush(this->color);
 	HGDIOBJ brush = SelectObject(hdc, h);
 	SelectObject(hdc, GetStockObject(NULL_PEN));
-	SetROP2(hdc, R2_XORPEN);
+	SetROP2(hdc, R2_NOTXORPEN);
 	for (int i = 0; i < this->brojkrugova; ++i) {
 		double a = M_PI * 2 * i / brojkrugova;
 		int centerX = sredina.x + r * sin(a);
@@ -55,7 +55,7 @@ void main_window::on_command(int id) {
 		ColorDialog.lpCustColors = acrCustClr;
 		ColorDialog.rgbResult = this->color;
 		ColorDialog.Flags = CC_FULLOPEN | CC_RGBINIT;
-		if (ChooseColor(&ColorDialog) == TRUE) {
+		if (ChooseColor(&ColorDialog)) {
 			this->color = ColorDialog.rgbResult;
 		}
 		InvalidateRect(*this, NULL, true);
